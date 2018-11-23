@@ -1,0 +1,11 @@
+*.asm
+*.ihx
+*.lk
+*.lst
+*.mem
+*.map
+*.rel
+*.rst
+*.sym
+
+.vscode

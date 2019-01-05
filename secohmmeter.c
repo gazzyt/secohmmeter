@@ -377,7 +377,7 @@ void CalibrateSelf()
 	WaitPeriod(10);
 	f1 = ReadNextPeriodCycles();
 
-	if (abs((int)f1 - (int)calibration_values.f1) > acceptableDrift)
+	if (abs((long)f1 - (long)calibration_values.f1) > acceptableDrift)
 	{
 		DisplayListChar(0, 0, 0, msg_setCalibrationCapacitor);
 

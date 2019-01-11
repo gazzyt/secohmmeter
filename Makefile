@@ -11,6 +11,9 @@ LINK_FLAGS = $(COMPILE_LINK_FLAGS) --model-small
 secohmmeter.ihx : secohmmeter.rel display.rel delay.rel eeprom.rel
 	sdcc $(LINK_FLAGS) secohmmeter.rel display.rel delay.rel eeprom.rel
 
+debuglc.ihx : debuglc.rel display.rel delay.rel
+	sdcc $(LINK_FLAGS) debuglc.rel display.rel delay.rel
+
 delay.rel : delay.c delay.h common.h
 	sdcc $(CFLAGS) delay.c
 
@@ -22,6 +25,9 @@ eeprom.rel : eeprom.c eeprom.h common.h
 
 secohmmeter.rel : secohmmeter.c display.h delay.h eeprom.h common.h
 	sdcc $(CFLAGS) secohmmeter.c
+
+debuglc.rel : debuglc.c display.h delay.h common.h
+	sdcc $(CFLAGS) debuglc.c
 
 clean :
 	rm -f *.rel *.sym *.lst *.asm *.lk *.map *.mem *.ihx *.rst

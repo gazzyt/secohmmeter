@@ -18,10 +18,18 @@ void SetLCMode();
 volatile uchar timer_cycles;		// The count of the number of times a timer has overflowed
 volatile uint oscillator_cycles;	// The count of the number of cycles the RC oscillator has performed
 
+uint min_value;
+uint max_value;
+
 main()
 {
+	min_value = UINT_MAX;
+	max_value = 0;
+	
 	LCMInit();
 	SetLCMode();
+	
+	WaitPeriod(20);
 
 	while (1)
 	{
@@ -132,11 +140,29 @@ void WaitPeriod(uchar numPeriods)
 
 void DisplayCycles()
 {
+	long eightCycles = 0L;
 	uint cycles;
+	uchar i;
 
-	cycles = ReadNextPeriodCycles();
+	ReadNextPeriodCycles();
+	ReadNextPeriodCycles();
 
-	DisplayLong(1, 0, cycles);
+	for (i = 0; i < 8; ++i)
+	{
+		eightCycles += ReadNextPeriodCycles();
+	}
+	
+	cycles = eightCycles >> 3;
+	
+	if (cycles < min_value)
+		min_value = cycles;
+	
+	if (cycles > max_value)
+		max_value = cycles;
+
+	DisplayLong(0, 0, min_value);
+	DisplayLong(1, 0, max_value);
+	DisplayLong(0, 9, cycles);
 }
 
 
